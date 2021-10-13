@@ -1,0 +1,35 @@
+﻿@model Blogs.Models.Role
+
+@{
+    ViewData["Title"] = "XÓA QUYỀN TRUY CẬP";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Roles" asp-action="Index">QUẢN LÝ QUYÊN TRUY CẬP</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Roles" asp-action="Create">XÓA QUYỀN TRUY CẬP</a></li>
+    </ol>
+    <h6 class="slim-pagetitle">XÓA QUYỀN TRUY CẬP</h6>
+</div><!-- slim-pageheader -->
+
+<div class="section-wrapper">
+    <div class="row mg-b-25">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input class="form-control" type="text" asp-for="RoleName">
+            </div>
+        </div><!-- col-4 -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input class="form-control" type="text" asp-for="RoleDescription">
+            </div>
+        </div><!-- col-4 -->
+    </div><!-- row -->
+    <form asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@Model.RoleId" method="post">
+        <input type="hidden" asp-for="RoleId" />
+        <input type="submit" value="Xác Nhận Xóa" class="btn btn-danger"/>
+        <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="btn btn-success bd-0"> Back To List</a>
+    </form>
+</div><!-- section-wrapper -->
