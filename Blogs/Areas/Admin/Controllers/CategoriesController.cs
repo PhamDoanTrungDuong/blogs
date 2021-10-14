@@ -13,6 +13,7 @@ using System.IO;
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly BlogsDBContext _context;
@@ -23,7 +24,7 @@ namespace Blogs.Areas.Admin.Controllers
         }
 
         // GET: Admin/Categories
-        public async Task<IActionResult> Index(int? page)
+        public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 1;//Utilities.PAGE_SIZE;
@@ -55,7 +56,7 @@ namespace Blogs.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public IActionResult Create()
         {
-           // ViewData["DanhMucGoc"] = new SelectList(_context.Categories.Where(x => x.Levels == 1), "CatId", "Catname");
+            ViewData["DanhMucGoc"] = new SelectList(_context.Categories.Where(x => x.Levels == 1), "CatId", "CatName");
             return View();
         }
 

@@ -1,0 +1,74 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Blogs.Models.Account>
+
+@{
+    ViewData["Title"] = "QUẢN LÝ TÀI KHOẢN";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Categories" asp-action="Index">QUẢN LÝ TÀI KHOẢN</a></li>
+    </ol>
+    <h6 class="slim-pagetitle">QUẢN LÝ TÀI KHOẢN</h6>
+</div><!-- slim-pageheader -->
+
+<div class="section-wrapper">
+    <label class="section-title">QUẢN LÝ TÀI KHOẢN</label>
+    <a asp-area="Admin" asp-controller="Accounts" asp-action="Create" class="btn btn-primary mb-3">+ Create</a>
+    <div class="table-responsive">
+        <table class="table mg-b-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>HỌ TÊN</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>QUYỀN TRUY CẬP</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.AccountId</th>
+                            <td>
+                                <p>Họ và Tên: @item.FullName</p>
+                                <p>Email: @item.Email</p>
+                                <p>Số điện thoại: @item.Phone</p>
+                                <p>Đăng nhập lần cuối: @item.LastLogin</p>
+                            </td>
+                            <td>
+                                @if (item.Active == true)
+                                {
+                                    <span class="badge badge-primary">Public</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">NON-Public</span>
+                                }
+                            </td>
+                            <td>
+                                @item.Role.RoleDescription
+                            </td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Accounts" asp-action="Details" asp-route-id="@item.AccountId" class="btn btn-success">View</a>
+                                <a asp-area="Admin" asp-controller="Accounts" asp-action="Edit" asp-route-id="@item.AccountId" class="btn btn-warning">Sửa</a>
+                                <a asp-area="Admin" asp-controller="Accounts" asp-action="Delete" asp-route-id="@item.AccountId" class="btn btn-danger">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        <div aria-label="Page navigation">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" asp-action="Index" asp-controller="Accounts" asp-area="Admin" asp-route-query="@Model" />
+            </ul>
+        </div>
+    </div><!-- table-responsive -->
+</div><!-- section-wrapper -->

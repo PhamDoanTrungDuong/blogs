@@ -10,6 +10,7 @@ using Blogs.Models;
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly BlogsDBContext _context;

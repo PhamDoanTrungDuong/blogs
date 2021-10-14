@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

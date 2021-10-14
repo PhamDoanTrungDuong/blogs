@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Blogs.Areas.Admin.Models;
 
 #nullable disable
 
@@ -143,5 +144,7 @@ namespace Blogs.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Blogs.Areas.Admin.Models.ChangePasswordViewModel> ChangePasswordViewModel { get; set; }
     }
 }

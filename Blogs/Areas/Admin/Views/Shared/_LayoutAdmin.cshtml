@@ -169,16 +169,15 @@
                 <div class="dropdown dropdown-c">
                     <a href="#" class="logged-user" data-toggle="dropdown">
                         <img src="http://via.placeholder.com/500x500" alt="">
-                        <span>Katherine</span>
+                        <span>Kathena</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <nav class="nav">
-                            <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                            <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
-                            <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
-                            <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                            <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
+                            <a href="/thong-tin-tai-khoan.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+                            <a href="/edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
+                            <a href="/doi-mat-khau.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
+                            <a href="/dang-xuat.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
                         </nav>
                     </div><!-- dropdown-menu -->
                 </div><!-- dropdown -->
@@ -216,13 +215,13 @@
                     <div class="sub-item">
                         <ul>
                             <li><a asp-area="Admin" asp-controller="Categories" asp-action="Index"  >QUẢN LÝ DANH MỤC</a></li>
-                            <li><a asp-area="Admin" asp-controller="Account" asp-action="Create" >QUẢN LÝ TÀI KHOẢN</a></li>
+                            <li><a asp-area="Admin" asp-controller="Accounts" asp-action="Index" >QUẢN LÝ TÀI KHOẢN</a></li>
                             <li><a asp-area="Admin" asp-controller="Roles" asp-action="Index" >QUYỀN TRUY CẬP</a></li>
                         </ul>       
                     </div>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="widgets.html">
+                    <a class="nav-link" asp-area="Admin" asp-controller="Advertisements" asp-action="Index">
                         <i class="icon ion-ios-analytics-outline"></i>
                         <span>QUẢNG CÁO</span>
                     </a>

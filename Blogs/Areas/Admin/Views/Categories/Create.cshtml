@@ -27,7 +27,8 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label class="form-control-label">DANH MỤC CHA: <span class="tx-danger">*</span></label>
-                        <select class="form-control selecte2" asp-for="Parents" asp-items="@ViewBag.DanhMucGoc"                         >
+                        <select class="form-control selecte2" asp-for="Parents" asp-items="@ViewBag.DanhMucGoc" required>
+                            >
                             <option value="0" selected> DANH MỤC GỐC</option>
                         </select>
                     </div>
@@ -55,7 +56,8 @@
                     </div>
                 </div><!-- col-4 -->
                 <div class="col-lg-6">
-                    <div class="form-group">COVER: <span class="tx-danger">*</span>
+                    <div class="form-group">
+                        COVER: <span class="tx-danger">*</span>
                         <input class="form-control-file" name="fcover" type="file" asp-for="Cover">
                     </div>
                 </div><!-- col-4 -->
