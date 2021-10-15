@@ -116,7 +116,7 @@ namespace Blogs.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreateDate,Author,AccountId,Tags,CatId,IsHost,IsNewfeed")] Post post, Microsoft.AspNetCore.Http.IFormFile fthumb)
         {
-            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
             var taikhoanID = HttpContext.Session.GetString("AccountId");
             if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
             var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
@@ -133,7 +133,7 @@ namespace Blogs.Areas.Admin.Controllers
                 {
                     string extension = Path.GetExtension(fthumb.FileName);
                     string newName = "icon_" + Utilities.ToUrlFriendly(post.Title) + "preview" + extension;
-                    post.Thumb = await Utilities.UploadFile(fthumb, @"news\", newName.ToLower());
+                    post.Thumb = await Utilities.UploadFile(fthumb, @"posts\", newName.ToLower());
                 }
 
                 _context.Add(post);
@@ -159,9 +159,9 @@ namespace Blogs.Areas.Admin.Controllers
             }
 
             ViewData["DanhMuc"] = new SelectList(_context.Categories, "CatId", "CatName", post.CatId);
-            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            var taikhoanID = HttpContext.Session.GetString("AccountId");
-            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            //var taikhoanID = HttpContext.Session.GetString("AccountId");
+            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
             return View(post);
         }
 
@@ -177,16 +177,16 @@ namespace Blogs.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            var taikhoanID = HttpContext.Session.GetString("AccountId");
-            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-            var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
-            if (account == null) return NotFound();
+            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+           // var taikhoanID = HttpContext.Session.GetString("AccountId");
+            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+           // var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
+            //if (account == null) return NotFound();
 
-            if (account.RoleId != 1)
-            {
-                if (post.AccountId != account.AccountId) return RedirectToAction(nameof(Index));
-            }
+            //if (account.RoleId != 1)
+            //{
+            //    if (post.AccountId != account.AccountId) return RedirectToAction(nameof(Index));
+            //}
 
 
             if (ModelState.IsValid)
@@ -197,11 +197,11 @@ namespace Blogs.Areas.Admin.Controllers
                     {
                         string extension = Path.GetExtension(fthumb.FileName);
                         string newName = "icon_" + Utilities.ToUrlFriendly(post.Title) + "preview" + extension;
-                        post.Thumb = await Utilities.UploadFile(fthumb, @"news\", newName.ToLower());
+                        post.Thumb = await Utilities.UploadFile(fthumb, @"posts\", newName.ToLower());
                     }
                     post.Alias = Utilities.ToUrlFriendly(post.Title);
-                    post.AccountId = account.AccountId;
-                    post.Author = account.FullName;
+                    //post.AccountId = account.AccountId;
+                    //post.Author = account.FullName;
 
                     _context.Update(post);
                     await _context.SaveChangesAsync();

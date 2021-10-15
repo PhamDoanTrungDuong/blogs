@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blogs.Areas.Admin.Controllers
 {
+    [Route("admin.html", Name = "AdminIndex")]
     [Area("Admin")]
     //[Authorize]
     public class HomeController : Controller
