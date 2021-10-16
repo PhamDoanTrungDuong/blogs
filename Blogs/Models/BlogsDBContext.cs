@@ -37,8 +37,7 @@ namespace Blogs.Models
 
             modelBuilder.Entity<Account>(entity =>
             {
-                entity.Property(e => e.AccountId)
-                    .ValueGeneratedNever()
+                entity.Property(e => e.AccountId).ValueGeneratedNever()
                     .HasColumnName("AccountID");
 
                 entity.Property(e => e.CreateAt).HasColumnType("datetime");
@@ -72,7 +71,6 @@ namespace Blogs.Models
                 entity.HasKey(e => e.CatId);
 
                 entity.Property(e => e.CatId)
-                    .ValueGeneratedNever()
                     .HasColumnName("CatID");
 
                 entity.Property(e => e.Alias).HasMaxLength(255);
@@ -93,7 +91,6 @@ namespace Blogs.Models
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.Property(e => e.PostId)
-                    .ValueGeneratedNever()
                     .HasColumnName("PostID");
 
                 entity.Property(e => e.AccountId).HasColumnName("AccountID");
@@ -132,7 +129,6 @@ namespace Blogs.Models
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.Property(e => e.RoleId)
-                    .ValueGeneratedNever()
                     .HasColumnName("RoleID");
 
                 entity.Property(e => e.RoleDescription).HasMaxLength(50);

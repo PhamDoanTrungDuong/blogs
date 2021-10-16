@@ -117,15 +117,15 @@ namespace Blogs.Areas.Admin.Controllers
         public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreateDate,Author,AccountId,Tags,CatId,IsHost,IsNewfeed")] Post post, Microsoft.AspNetCore.Http.IFormFile fthumb)
         {
             //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            var taikhoanID = HttpContext.Session.GetString("AccountId");
-            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-            var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
-            if (account == null) return NotFound();
+            //var taikhoanID = HttpContext.Session.GetString("AccountId");
+            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            //var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
+            //if (account == null) return NotFound();
 
             if (ModelState.IsValid)
             {
-                post.AccountId = account.AccountId;
-                post.Author = account.FullName;
+               // post.AccountId = account.AccountId;
+               // post.Author = account.FullName;
                 if (post.CatId == null) post.CatId = 1;
                 post.CreateDate = DateTime.Now;
                 post.Alias = Utilities.ToUrlFriendly(post.Title);

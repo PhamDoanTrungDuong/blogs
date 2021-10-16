@@ -24,29 +24,29 @@ namespace Blogs.Controllers
 
         public IActionResult Index()
         {
-            //var tin = _context.Posts.Find(1);
-            //for(int i=1; i<=20; i++)
-            //{
-            //    Post post = new Post();
-            //    post = tin;
-            //    post.CatId = tin.CatId;
-            //    post.Title = tin.Title;
-            //    post.Scontents = tin.Scontents;
-            //    post.Contents = tin.Contents;
-            //    post.Thumb = tin.Thumb;
-            //    post.Published = tin.Published;
-            //    post.Alias = tin.Alias;
-            //    post.CreateDate = tin.CreateDate;
-            //    post.Author = tin.Author;
-            //    post.AccountId = tin.AccountId;
-            //    post.Tags = tin.Tags;
-            //    post.IsHost = tin.IsHost;
-            //    post.IsNewfeed = tin.IsNewfeed;
-            //    post.CatId = tin.CatId;
+             //var tin = _context.Posts.Find(1);
+             //for(int i=1; i<=20; i++)
+             //{
+             //    Post post = new Post();
+             //    post = tin;
+             //    post.CatId = tin.CatId;
+             //    post.Title = tin.Title;
+             //    post.Scontents = tin.Scontents;
+             //    post.Contents = tin.Contents;
+             //    post.Thumb = tin.Thumb;
+             //    post.Published = tin.Published;
+             //    post.Alias = tin.Alias;
+             //    post.CreateDate = tin.CreateDate;
+             //    post.Author = tin.Author;
+             //    post.AccountId = tin.AccountId;
+             //    post.Tags = tin.Tags;
+             //    post.IsHost = tin.IsHost;
+             //    post.IsNewfeed = tin.IsNewfeed;
+             //    post.CatId = tin.CatId;
 
-            //    _context.Add(post);
-            //    _context.SaveChanges();
-            //}
+             //    _context.Add(post);
+             //    _context.SaveChanges();
+             //}
 
             HomeVM model = new HomeVM();
 
