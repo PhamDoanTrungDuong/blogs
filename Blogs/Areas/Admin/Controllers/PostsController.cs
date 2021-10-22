@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly BlogsDBContext _context;
@@ -28,16 +28,16 @@ namespace Blogs.Areas.Admin.Controllers
         // GET: Admin/Posts
         public IActionResult Index(int? page, int CatID = 0)
         {
-            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            //var taikhoanID = HttpContext.Session.GetString("AccountId");
-            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-            //var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
-            //if (account == null) return NotFound();
+            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
+            if (account == null) return NotFound();
 
             List<Post> lsPosts = new List<Post>();
 
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 1;//Utilities.PAGE_SIZE;
+            var pageSize = Utilities.PAGE_SIZE;
 
             if (CatID != 0)
             {
@@ -102,9 +102,9 @@ namespace Blogs.Areas.Admin.Controllers
         // GET: Admin/Posts/Create
         public IActionResult Create()
         {
-            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            //var taikhoanID = HttpContext.Session.GetString("AccountId");
-            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
             ViewData["DanhMuc"] = new SelectList(_context.Categories, "CatId", "CatName");
             return View();
         }
@@ -116,16 +116,16 @@ namespace Blogs.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreateDate,Author,AccountId,Tags,CatId,IsHost,IsNewfeed")] Post post, Microsoft.AspNetCore.Http.IFormFile fthumb)
         {
-            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            //var taikhoanID = HttpContext.Session.GetString("AccountId");
-            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-            //var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
-            //if (account == null) return NotFound();
+            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
+            if (account == null) return NotFound();
 
             if (ModelState.IsValid)
             {
-               // post.AccountId = account.AccountId;
-               // post.Author = account.FullName;
+                post.AccountId = account.AccountId;
+                post.Author = account.FullName;
                 if (post.CatId == null) post.CatId = 1;
                 post.CreateDate = DateTime.Now;
                 post.Alias = Utilities.ToUrlFriendly(post.Title);
@@ -159,9 +159,9 @@ namespace Blogs.Areas.Admin.Controllers
             }
 
             ViewData["DanhMuc"] = new SelectList(_context.Categories, "CatId", "CatName", post.CatId);
-            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-            //var taikhoanID = HttpContext.Session.GetString("AccountId");
-            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
             return View(post);
         }
 
@@ -177,16 +177,16 @@ namespace Blogs.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            //if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
-           // var taikhoanID = HttpContext.Session.GetString("AccountId");
-            //if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
-           // var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
-            //if (account == null) return NotFound();
+            if (!User.Identity.IsAuthenticated) Response.Redirect("/dang-nhap.html");
+            var taikhoanID = HttpContext.Session.GetString("AccountId");
+            if (taikhoanID == null) return RedirectToAction("Login", "Accounts", new { Area = "Admin" });
+            var account = _context.Accounts.AsNoTracking().FirstOrDefault(x => x.AccountId == int.Parse(taikhoanID));
+            if (account == null) return NotFound();
 
-            //if (account.RoleId != 1)
-            //{
-            //    if (post.AccountId != account.AccountId) return RedirectToAction(nameof(Index));
-            //}
+            if (account.RoleId != 1)
+            {
+                if (post.AccountId != account.AccountId) return RedirectToAction(nameof(Index));
+            }
 
 
             if (ModelState.IsValid)
@@ -200,8 +200,8 @@ namespace Blogs.Areas.Admin.Controllers
                         post.Thumb = await Utilities.UploadFile(fthumb, @"posts\", newName.ToLower());
                     }
                     post.Alias = Utilities.ToUrlFriendly(post.Title);
-                    //post.AccountId = account.AccountId;
-                    //post.Author = account.FullName;
+                    post.AccountId = account.AccountId;
+                    post.Author = account.FullName;
 
                     _context.Update(post);
                     await _context.SaveChangesAsync();

@@ -13,11 +13,12 @@ using Blogs.Areas.Admin.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Blogs.Extension;
+using Blogs.Helpers;
 
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AccountsController : Controller
     {
         private readonly BlogsDBContext _context;
@@ -31,10 +32,10 @@ namespace Blogs.Areas.Admin.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 1;//Utilities.PAGE_SIZE;
+            var pageSize = Utilities.PAGE_SIZE;
             var lsAccounts = _context.Accounts
                 .Include(a => a.Role)
-                .OrderByDescending(x => x.CreateAt);
+                .OrderBy(x => x.CreateAt);
             PagedList<Account> models = new PagedList<Account>(lsAccounts, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
@@ -64,12 +65,13 @@ namespace Blogs.Areas.Admin.Controllers
                     Account kh = _context.Accounts
                         .Include(p => p.Role)
                         .SingleOrDefault(p => p.Email.ToLower() == model.Email.ToLower().Trim());
+
                     if (kh == null)
                     {
                         ViewBag.Error = "Thông tin đăng nhập không chính xác";
                         return View(model);
                     }
-                    string pass = (model.Password.Trim() + kh.Salt.Trim().ToLower());
+                    string pass = (model.Password.ToLower() + kh.Salt.Trim()).ToMD5();
                     if (kh.Password.Trim() != pass)
                     {
                         ViewBag.Error = "Thông tin đăng nhập không chính xác";
@@ -98,19 +100,19 @@ namespace Blogs.Areas.Admin.Controllers
                     var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
                     await HttpContext.SignInAsync(userPrincipal);
 
-                    //if (Url.IsLocalUrl(returnUrl))
-                    //{
-                    //    return Redirect(returnUrl);
-                    //}
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("Index", "Home", new { Area = "Admin" });
                 }
 
             }
             catch
             {
-                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                return RedirectToAction("Login", "Home", new { Area = "Admin" });
             }
-            return RedirectToAction("Index", "Home", new { Area = "Admin" });
+            return RedirectToAction("Login", "Home", new { Area = "Admin" });
 
         }
 
@@ -166,6 +168,11 @@ namespace Blogs.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string passnow = (account.Password.ToLower() + account.Salt.Trim()).ToMD5();
+                account.Password = passnow;
+                account.CreateAt = DateTime.Now;
+                account.LastLogin = DateTime.Now;
+
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -332,7 +339,7 @@ namespace Blogs.Areas.Admin.Controllers
 
                 try
                 {
-                    string passnow = (model.PasswordNow + account.Salt.Trim().ToMD5());
+                    string passnow = (model.PasswordNow.ToLower() + account.Salt.Trim()).ToMD5();
                     if (passnow == account.Password.Trim())
                     {
                         account.Password = (model.Password + account.Salt.Trim().ToMD5());

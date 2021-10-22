@@ -19,8 +19,8 @@ namespace Blogs.Models
         public int? AccountId { get; set; }
         public string Tags { get; set; }
         public int? CatId { get; set; }
-        public bool IsHost { get; set; }
-        public bool IsNewfeed { get; set; }
+        public bool? IsHost { get; set; }
+        public bool? IsNewfeed { get; set; }
 
         public virtual Account Account { get; set; }
         public virtual Category Cat { get; set; }

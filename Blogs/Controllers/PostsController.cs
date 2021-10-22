@@ -29,8 +29,8 @@ namespace Blogs.Controllers
             if (danhmuc == null) return RedirectToAction("Home", "Index");
 
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            //var pageSize = Utilities.PAGE_SIZE;
-            var pageSize = 5;
+            var pageSize = Utilities.PAGE_SIZE;
+           // var pageSize = 5;
 
             List<Post> lsPosts = new List<Post>();
 

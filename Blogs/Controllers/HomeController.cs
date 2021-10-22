@@ -24,10 +24,10 @@ namespace Blogs.Controllers
 
         public IActionResult Index()
         {
-             //var tin = _context.Posts.Find(1);
+             //var tin = _context.Posts.Find(2);
              //for(int i=1; i<=20; i++)
              //{
-             //    Post post = new Post();
+             //   Post post = new Post();
              //    post = tin;
              //    post.CatId = tin.CatId;
              //    post.Title = tin.Title;
@@ -50,7 +50,7 @@ namespace Blogs.Controllers
 
             HomeVM model = new HomeVM();
 
-            var ls = _context.Posts.Include(x => x.Cat).AsNoTracking().ToList();
+            var ls = _context.Posts.Include(x => x.Cat).AsNoTracking().Take(4).ToList();
 
             model.LatestPost = ls;
             model.Populars = ls;

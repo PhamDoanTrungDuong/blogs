@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <input class="form-control" placeholder="Tìm kiếm theo bài viết" type="text" id="keyword" name="keyword"/>
+        <input class="form-control" placeholder="Tìm kiếm theo bài viết" type="text" id="keyword" name="keyword" />
     </div>
 </div>
 
@@ -85,7 +85,7 @@
     </div><!-- table-responsive -->
 </div><!-- section-wrapper -->
 
-@section Scripts { 
+@section Scripts {
     <script>
         $(document).ready(function () {
             $("#keyword").keyup(function () {
@@ -106,12 +106,12 @@
             });
 
             jQuery("#catID").change(function () {
-                var _catID = jquery(this).children(":selected").attr("value");
+                var _catID = jQuery(this).children(":selected").attr("value");
                 catid = parseFloat(_catID);
                 $('#catID option')
                     .removeAttr("selected");
                 $("#catID > [value=" + catid + "]").attr("selected", true);
-                    .attr("selected");
+                        .attr("selected");
                 $.ajax({
                     url: '/Admin/Posts/Filtter/',
                     datatype: "json",

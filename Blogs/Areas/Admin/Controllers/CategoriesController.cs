@@ -9,11 +9,12 @@ using Blogs.Models;
 using Blogs.Helpers;
 using PagedList.Core;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blogs.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly BlogsDBContext _context;
@@ -27,7 +28,7 @@ namespace Blogs.Areas.Admin.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 1;//Utilities.PAGE_SIZE;
+            var pageSize = Utilities.PAGE_SIZE;
             var lsCategories = _context.Categories
                 .OrderByDescending(x => x.CatId);
             PagedList<Category> models = new PagedList<Category>(lsCategories, pageNumber, pageSize);
@@ -82,19 +83,19 @@ namespace Blogs.Areas.Admin.Controllers
                 {
                     string extension = Path.GetExtension(fthumb.FileName);
                     string newName = Utilities.ToUrlFriendly(category.CatName) + "preview" + extension;
-                    category.Thumb = await Utilities.UploadFile(fthumb, @"categories\", newName.ToLower());
+                    category.Thumb = await Utilities.UploadFile(fthumb, @"categories", newName.ToLower());
                 }
                 if (fcover != null)
                 {
                     string extension = Path.GetExtension(fcover.FileName);
                     string newName =  "cover_" + Utilities.ToUrlFriendly(category.CatName) + extension;
-                    category.Thumb = await Utilities.UploadFile(fcover, @"covers\", newName.ToLower());
+                    category.Thumb = await Utilities.UploadFile(fcover, @"covers", newName.ToLower());
                 }
                 if (ficon != null)
                 {
                     string extension = Path.GetExtension(ficon.FileName);
                     string newName = "icon_" + Utilities.ToUrlFriendly(category.CatName) + "preview" + extension;
-                    category.Thumb = await Utilities.UploadFile(ficon, @"icons\", newName.ToLower());
+                    category.Thumb = await Utilities.UploadFile(ficon, @"icons", newName.ToLower());
                 }
                 _context.Add(category);
                 await _context.SaveChangesAsync();
@@ -149,19 +150,19 @@ namespace Blogs.Areas.Admin.Controllers
                     {
                         string extension = Path.GetExtension(fthumb.FileName);
                         string newName = Utilities.ToUrlFriendly(category.CatName) + "preview" + extension;
-                        category.Thumb = await Utilities.UploadFile(fthumb, @"categories\", newName.ToLower());
+                        category.Thumb = await Utilities.UploadFile(fthumb, @"categories", newName.ToLower());
                     }
                     if (fcover != null)
                     {
                         string extension = Path.GetExtension(fcover.FileName);
                         string newName = "cover_" + Utilities.ToUrlFriendly(category.CatName) + extension;
-                        category.Thumb = await Utilities.UploadFile(fcover, @"covers\", newName.ToLower());
+                        category.Thumb = await Utilities.UploadFile(fcover, @"covers", newName.ToLower());
                     }
                     if (ficon != null)
                     {
                         string extension = Path.GetExtension(ficon.FileName);
                         string newName = "icon_" + Utilities.ToUrlFriendly(category.CatName) + "preview" + extension;
-                        category.Thumb = await Utilities.UploadFile(ficon, @"icons\", newName.ToLower());
+                        category.Thumb = await Utilities.UploadFile(ficon, @"icons", newName.ToLower());
                     }
                     _context.Update(category);
                     await _context.SaveChangesAsync();

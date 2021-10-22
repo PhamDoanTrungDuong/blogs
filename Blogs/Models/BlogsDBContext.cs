@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Blogs.Areas.Admin.Models;
 
 #nullable disable
 
@@ -27,7 +26,8 @@ namespace Blogs.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=BlogsDB;Integrated Security=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.; Database= BlogsDB;  Integrated Security=True");
             }
         }
 
@@ -37,8 +37,7 @@ namespace Blogs.Models
 
             modelBuilder.Entity<Account>(entity =>
             {
-                entity.Property(e => e.AccountId).ValueGeneratedNever()
-                    .HasColumnName("AccountID");
+                entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
                 entity.Property(e => e.CreateAt).HasColumnType("datetime");
 
@@ -70,8 +69,7 @@ namespace Blogs.Models
             {
                 entity.HasKey(e => e.CatId);
 
-                entity.Property(e => e.CatId)
-                    .HasColumnName("CatID");
+                entity.Property(e => e.CatId).HasColumnName("CatID");
 
                 entity.Property(e => e.Alias).HasMaxLength(255);
 
@@ -90,8 +88,7 @@ namespace Blogs.Models
 
             modelBuilder.Entity<Post>(entity =>
             {
-                entity.Property(e => e.PostId)
-                    .HasColumnName("PostID");
+                entity.Property(e => e.PostId).HasColumnName("PostID");
 
                 entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
@@ -128,8 +125,7 @@ namespace Blogs.Models
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.Property(e => e.RoleId)
-                    .HasColumnName("RoleID");
+                entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
                 entity.Property(e => e.RoleDescription).HasMaxLength(50);
 
@@ -140,7 +136,5 @@ namespace Blogs.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public DbSet<Blogs.Areas.Admin.Models.ChangePasswordViewModel> ChangePasswordViewModel { get; set; }
     }
 }
